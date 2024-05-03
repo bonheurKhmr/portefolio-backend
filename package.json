@@ -1,0 +1,15 @@
+{
+  "name": "port_folio",
+  "version": "1.0.0",
+  "description": "api pour mon portefolio pour s'auvegarder mes projet et le publie",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "author": "bonheur",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
