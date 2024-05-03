@@ -5,7 +5,7 @@ const app = express()
 const port = 3000
 
 /** les endpoint */
-app.get('/', (req, res) =>  res.send('hello Express'))
+app.get('/', (req, res) =>  res.send('hello Express on va'))
 
 /** lancement du server */
-app.listen(port, () => `l'application redemer sur le port : http://localhost:${port}`)
+app.listen(port, () => console.log (`l'application redemer sur le port : http://localhost:${port}`))
