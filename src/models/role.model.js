@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
         },
 
         role: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(50),
             allowNull: false,
             unique: {
                 msg: `role existant`

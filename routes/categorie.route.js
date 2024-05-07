@@ -7,11 +7,12 @@ const {
     deleteCategorie
 } = require('../src/controllers/categorie.controller')
 const route = express.Router()
+const auth = require("./../auth/auth")
 
-route.get('/', getCategories)
-route.get('/:id', getCategorie)
-route.post('/', addCategorie)
-route.put('/:id', updateCategorie)
-route.delete('/:id', deleteCategorie)
+route.get('/', auth, getCategories)
+route.get('/:id', auth, getCategorie)
+route.post('/', auth, addCategorie)
+route.put('/:id', auth,  updateCategorie)
+route.delete('/:id', auth, deleteCategorie)
 
 module.exports = route
