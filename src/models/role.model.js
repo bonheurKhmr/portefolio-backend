@@ -1,4 +1,4 @@
-module.exports = (sequelize, DataTypes) => {
+const roleModel = (sequelize, DataTypes) => {
     return sequelize.define('role', {
         id: {
             type: DataTypes.INTEGER,
@@ -39,4 +39,8 @@ module.exports = (sequelize, DataTypes) => {
     {
         timestamps: true,
     })
+}
+
+module.exports = {
+    roleModel,
 }

@@ -4,8 +4,9 @@ const {
 } = require('sequelize');
 
 const categorieModel = require("./../models/categorie.model")
-const roleModel = require("./../models/role.model")
-const userModel = require("./../models/user.model")
+const {roleModel} = require("./../models/role.model")
+const {userModel} = require("./../models/user.model")
+const statuModel = require("./../models/status.model")
 
 // connexion a la base de donne
 const sequelize = new Sequelize('portefolio', 'root', 'root', {
@@ -21,6 +22,19 @@ const sequelize = new Sequelize('portefolio', 'root', 'root', {
 const categorie = categorieModel(sequelize, DataTypes)
 const role = roleModel(sequelize, DataTypes)
 const user = userModel(sequelize, DataTypes)
+const status = statuModel(sequelize, DataTypes)
+
+role.hasMany(user, {
+    onDelete: 'RESTRICT',
+    onUpdate: 'RESTRICT',
+})
+
+user.belongsTo(role, {
+    foreignKey: {
+        field: 'roleId',
+        allowNull: false
+    },
+})
 
 const initDB = () => {
     return sequelize.sync({ force: false })
@@ -31,4 +45,5 @@ module.exports = {
     categorie,
     role,
     user,
+    status,
 }

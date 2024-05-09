@@ -1,21 +1,20 @@
 const {
     ValidationError,
-    UniqueConstraintError
+    UniqueConstraintError,
 } = require("sequelize")
 const {
     success
 } = require("../../helper")
 const {
-    user
+    user,
+    role
 } = require("./../db/sequelize")
 const {
     Op
 } = require("sequelize")
 
 const bcrypt = require("bcrypt")
-const {
-    json
-} = require("body-parser")
+
 
 /**
  * renvoie tous les categories
@@ -43,6 +42,8 @@ const getUsers = async (req, res) => {
                     [Op.like]: `%${name}%`
                 }
             },
+
+            include: role,
             order: [
                 [orderBy, order]
             ],
@@ -69,10 +70,7 @@ const getUsers = async (req, res) => {
                 }
             })
         })
-        .catch(error => res.status(500).json({
-            message: `impossible de trouver les utilisateurs veiller reillessayer dans quelques instant`,
-            data: error
-        }))
+        
 }
 
 /**
@@ -273,6 +271,11 @@ const changePassword = async (req, res) => {
         })
 }
 
+const updateImage = async (req, res) => {
+    console.log(req.file);
+    console.log(`http://localhost:3000/profile/${req.file.filename}`)
+}
+
 module.exports = {
     getUsers,
     getUser,
@@ -280,4 +283,5 @@ module.exports = {
     updateUser,
     deleteUser,
     changePassword,
+    updateImage,
 }
