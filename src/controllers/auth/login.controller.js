@@ -7,6 +7,7 @@ const { user } = require("./../../db/sequelize")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const privateKey = require ("./../../../auth/private.key")
+const { json } = require("body-parser")
 
 const login = async (req, res) => {
     user.findOne({ where: { login: req.body.login } })

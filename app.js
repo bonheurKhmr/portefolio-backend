@@ -5,6 +5,7 @@ const categorieRoute = require("./routes/categorie.route")
 const roleRoute = require("./routes/role.route")
 const statusRoute = require("./routes/status.route")
 const userRoute = require("./routes/user.route")
+const projetRoute = require("./routes/projet.route")
 const loginRoute = require("./routes/login.route")
 
 const app = express()
@@ -21,7 +22,9 @@ app.use('/api/categorie', categorieRoute)
 app.use('/api/role', roleRoute)
 app.use('/api/status', statusRoute)
 app.use('/api/user', userRoute)
+app.use('/api/projet', projetRoute)
 app.use('/api/login', loginRoute)
+
 
 app.use('/profile', express.static('public/upload/images'))
 

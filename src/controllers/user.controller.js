@@ -70,7 +70,7 @@ const getUsers = async (req, res) => {
                 }
             })
         })
-        
+
 }
 
 /**
@@ -214,7 +214,7 @@ const deleteUser = async (req, res) => {
                 where: {
                     id: id
                 }
-            }).then(_ => res.status(200).json(success(item, `categorie ${item.id} : ${item.category} a ete supprimer avec success`)))
+            }).then(_ => res.status(200).json(success(item, `l'utilisateur ${item.id} : ${item.name} a ete supprimer avec success`)))
         })
         .catch(error => res.status(500).json({
             message: `une erreur est survenu ${error}`
@@ -223,14 +223,20 @@ const deleteUser = async (req, res) => {
 
 const changePassword = async (req, res) => {
 
-    const data = { password: req.body.password }
+    const data = {
+        password: req.body.password
+    }
     const id = req.params.id
 
     await bcrypt
         .hash(data.password, 10)
         .then(hash => {
             data.password = hash
-            return user.update(data, { where: { id: id } })
+            return user.update(data, {
+                    where: {
+                        id: id
+                    }
+                })
                 .then(item => {
                     if (item === 0) {
                         return res.status(404).json({
@@ -272,8 +278,25 @@ const changePassword = async (req, res) => {
 }
 
 const updateImage = async (req, res) => {
-    console.log(req.file);
-    console.log(`http://localhost:3000/profile/${req.file.filename}`)
+    const data = { image: req.file.filename }
+    const id = req.params.id
+
+    await user.update(data, { where: { id: id }
+    }).then(_ => {
+        return user.findByPk(id).then(item => {
+            if (item === null) {
+                return res.status(404).json({
+                    message: `l'utilisateur demander n'est pas trouver`
+                })
+            }
+            return res.status(200).json(success(item, `le profile a ete mis a jour avec success`))
+        })
+    }).catch(error => {
+        res.status(500).json({ 
+            message: `une erreur est survenue veiller reessayer dans quelques instant`,
+            data: error
+        })
+    })
 }
 
 module.exports = {
