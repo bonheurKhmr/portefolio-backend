@@ -7,6 +7,7 @@ const statusRoute = require("./routes/status.route")
 const userRoute = require("./routes/user.route")
 const projetRoute = require("./routes/projet.route")
 const loginRoute = require("./routes/login.route")
+const fileProjetRoute = require("./routes/fileProjet.route")
 
 const app = express()
 const port = 3000
@@ -18,6 +19,7 @@ app.use(express.urlencoded({extended: false}))
 sequelize.initDB()
 
 /** point de terminaison (route) */
+app.use('/api/file-projet', fileProjetRoute)
 app.use('/api/categorie', categorieRoute)
 app.use('/api/role', roleRoute)
 app.use('/api/status', statusRoute)
@@ -27,6 +29,7 @@ app.use('/api/login', loginRoute)
 
 
 app.use('/profile', express.static('public/upload/images'))
+app.use('/projet_img/', express.static('public/upload/file_project'))
 
 
 

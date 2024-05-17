@@ -8,6 +8,7 @@ const {roleModel} = require("./../models/role.model")
 const {userModel} = require("./../models/user.model")
 const statuModel = require("./../models/status.model");
 const { projetModel } = require('../models/projet.model');
+const { fileProjetModel } = require('../models/file.model');
 
 // connexion a la base de donne
 const sequelize = new Sequelize('portefolio', 'root', 'root', {
@@ -25,6 +26,17 @@ const role = roleModel(sequelize, DataTypes)
 const user = userModel(sequelize, DataTypes)
 const status = statuModel(sequelize, DataTypes)
 const projet = projetModel(sequelize, DataTypes)
+const fileProjet = fileProjetModel(sequelize, DataTypes)
+
+projet.hasMany(fileProjet, {
+    onDelete: 'RESTRICT',
+    onUpdate: 'RESTRICT',
+    foreignKey: {
+        field: 'projetId',
+        allowNull: false
+    },
+})
+fileProjet.belongsTo(projet)
 
 user.hasMany(projet, {
     onDelete: 'RESTRICT',
@@ -45,6 +57,8 @@ status.hasMany(projet, {
     },
 })
 projet.belongsTo(status)
+categorie.belongsToMany(projet, { through: 'categoryProjets' });
+projet.belongsToMany(categorie, { through: 'categoryProjets' });
 
 role.hasMany(user, {
     onDelete: 'RESTRICT',
@@ -57,9 +71,6 @@ role.hasMany(user, {
 
 user.belongsTo(role)
 
-categorie.belongsToMany(projet, { through: 'categoryProjets' });
-projet.belongsToMany(categorie, { through: 'categoryProjets' });
-
 const initDB = () => {
     return sequelize.sync({ force: false })
 }
@@ -71,4 +82,5 @@ module.exports = {
     user,
     status,
     projet,
+    fileProjet,
 }

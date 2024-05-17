@@ -12,7 +12,8 @@ const {
 const route = express.Router()
 const auth = require("./../auth/auth")
 const { errHandler } = require('../src/exception/errHandler')
-const { upload } = require('../src/midlware/uploadFile')
+const { uploadProfile } = require('../src/midlware/uploadFile')
+
 
 route.get('/', auth, getUsers)
 route.get('/:id', auth, getUser)
@@ -20,7 +21,6 @@ route.post('/', auth, addUser)
 route.put('/:id', auth, updateUser)
 route.put('/update_password/:id', auth, changePassword)
 route.delete('/:id', auth, deleteUser)
-route.put('/update-profil/:id', upload.single('image'), auth, errHandler , updateImage)
-
+route.put('/update-profil/:id', uploadProfile.single('image'), auth, errHandler , updateImage)
 
 module.exports = route

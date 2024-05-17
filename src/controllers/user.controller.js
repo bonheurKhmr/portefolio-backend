@@ -289,7 +289,11 @@ const updateImage = async (req, res) => {
                     message: `l'utilisateur demander n'est pas trouver`
                 })
             }
-            return res.status(200).json(success(item, `le profile a ete mis a jour avec success`))
+            return res.status(200).json({
+                message: `le profile a ete mis a jour avec success`,
+                link: `localhost:3000/profile/${item.image}`,
+                data: item
+            })
         })
     }).catch(error => {
         res.status(500).json({ 

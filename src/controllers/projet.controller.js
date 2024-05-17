@@ -3,19 +3,14 @@ const {
     UniqueConstraintError,
 } = require("sequelize")
 const {
-    success
-} = require("../../helper")
-const {
     projet,
     status,
     user,
+    categorie,
+    fileProjet,
 } = require("./../db/sequelize")
-const {
-    Op
-} = require("sequelize")
-
-const bcrypt = require("bcrypt")
-const { json } = require("body-parser")
+const { Op } = require("sequelize")
+const { success } = require("../../helper")
 
 
 /**
@@ -45,7 +40,7 @@ const getProjets = async (req, res) => {
                 }
             },
 
-            include: [status, user],
+            include: [status, user, categorie, fileProjet],
             order: [
                 [orderBy, order]
             ],
@@ -107,7 +102,7 @@ const getProjet = async (req, res) => {
  */
 const addProjet = async (req, res) => {
 
-    await projet.create(req.body)
+    await projet.create( req.body,{ include: [status, user, categorie], } )
         .then(Projet => { res.status(200).json(success(Projet)) })
         .catch(error => {
             if (error instanceof ValidationError) {
